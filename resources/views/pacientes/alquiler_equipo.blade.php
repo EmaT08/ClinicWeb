@@ -118,10 +118,20 @@
         .dark-mode .form-control, .dark-mode input, .dark-mode select, .dark-mode textarea { background: rgba(78, 205, 196, 0.05) !important; color: #fff !important; border: 1px solid #4ecdc4 !important; }
         .dark-mode .btn-custom-cancel { background: transparent !important; color: #dc3545 !important; border: 2px solid #dc3545 !important; }
         .dark-mode .btn-custom-confirm { background: linear-gradient(135deg, #2c5364, #203a43) !important; color: #e4e4e4 !important; }
+
+        .header h1 {
+            color: #0f766e;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
     </style>
 
     <br><br>
-    <h1 class="text-center text-info-emphasis">Alquiler de Equipo de Movilidad</h1>
+    <div class="text-center header">
+        <h1> Alquiler de Equipo de Movilidad</h1>
+    </div>
+
 
     <div class="formulario">
         <div class="register-section">

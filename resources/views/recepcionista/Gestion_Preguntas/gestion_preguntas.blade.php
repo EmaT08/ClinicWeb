@@ -33,9 +33,9 @@
 
         .page-header h1 {
             color: #333;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 30px;
         }
 
         .page-header p {
@@ -346,7 +346,7 @@
         }
 
     </style>
-    <br>
+    <br><br><br><br>
     <div class="faq-container">
         <div class="page-header">
             <div class="d-flex justify-content-between align-items-center">
@@ -358,7 +358,7 @@
                 </a>
             </div>
         </div>
-        <br><br>
+        <br>
         {{-- Mensajes --}}
         @if(session('success'))
             <div class="alert alert-success">

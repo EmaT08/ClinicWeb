@@ -478,10 +478,21 @@
         .dark-mode .table tbody tr:hover td {
             background: #2a2a2a !important;
         }
+        .header h1 {
+            color: #0f766e;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+
+        }
     </style>
     <div class="administracion">
         <div class="container mt-5 pt-5">
-        <h1 class="mb-3">Consulta y Cotización de Medicamentos</h1>
+
+            <div class=" text-center header">
+                <h1> Consulta y Cotización de Medicamentos</h1>
+            </div>
+
 
             <div class="inventory-card mt-4">
                 <div class="table-container">

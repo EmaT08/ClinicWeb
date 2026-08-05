@@ -10,12 +10,13 @@
             font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
             background:whitesmoke;
             min-height:100vh;
-            padding:20px;
+
         }
 
         .citas-container{
             max-width:1450px;
             margin:40px auto;
+            padding:20px;
         }
 
         .header{

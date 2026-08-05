@@ -111,6 +111,16 @@
             color: #2c3e50;
             border-radius: 10px;
         }
+        .header h1 {
+            color: #0f766e;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+
+
+
+
+        }
 
         /* ================= DARK MODE ================= */
         .dark-mode body { background: #121212 !important; color: #e4e4e4 !important; }
@@ -122,7 +132,10 @@
     </style>
 
     <br><br>
-    <h1 class="text-center text-info-emphasis">Gestión de Traslados</h1>
+    <div class=" text-center header">
+        <h1> Gestión de Traslados</h1>
+    </div>
+
 
     <div class="formulario">
         <div class="register-section">

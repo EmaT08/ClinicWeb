@@ -552,7 +552,7 @@
                 <h5 class="footer-title">Contacto</h5>
                 <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
                 <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
-                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="46252928322725322906252a2f282f25312324682e28">[email&#160;protected]</a></p>
+                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i>contacto@clinicweb.hn</p>
             </div>
 
             <!-- Columna 3 -->

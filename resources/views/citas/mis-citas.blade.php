@@ -9,12 +9,13 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background:whitesmoke;
             min-height: 100vh;
-            padding: 20px;
+
         }
 
         .citas-container {
             max-width: 1450px;
             margin: 40px auto;
+            padding: 20px;
         }
 
         .header {
@@ -120,7 +121,7 @@
             display: block;
             color: #2c3e50;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 20px;
             font-size: 0.9rem;
         }
 
@@ -132,6 +133,7 @@
             font-size: 0.95rem;
             transition: all 0.3s ease;
             background: #f8fffe;
+
         }
 
         .filter-group select:focus {
@@ -1254,7 +1256,7 @@
 
 
         </div>
-
+        <br>
         <!-- Filtros -->
         <div class="filters-card">
             <form method="GET" action="{{ route('citas.mis-citas') }}">
@@ -1273,8 +1275,8 @@
                     <div class="filter-group">
                         <label><i class="fas fa-sort"></i> Ordenar por</label>
                         <select name="orden">
-                            <option value="fecha_desc" {{ request('orden') == 'fecha_desc' ? 'selected' : '' }}>Fecha (más reciente)</option>
-                            <option value="fecha_asc" {{ request('orden') == 'fecha_asc' ? 'selected' : '' }}>Fecha (más antigua)</option>
+                            <option value="fecha_desc" {{ request('orden') == 'fecha_desc' ? 'selected' : '' }}>Fecha más reciente </option>
+                            <option value="fecha_asc" {{ request('orden') == 'fecha_asc' ? 'selected' : '' }}>Fecha más antigua</option>
                         </select>
                     </div>
 
@@ -1286,7 +1288,7 @@
                 </div>
             </form>
         </div>
-
+        <br>
         <!-- Grid de Citas -->
         @if($citas->count() > 0)
             <div class="citas-grid">
@@ -1408,7 +1410,7 @@
                                     </form>
                                 </div>
                             @endif
-
+                            <br><br>
                             @if($cita->estado == 'completada')
                                 <div class="cita-actions">
                                     <form id="formArchivar{{ $cita->id }}" action="{{ route('citas.archivar', $cita->id) }}" method="POST" style="flex:1; margin:0;">
