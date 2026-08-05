@@ -884,16 +884,16 @@
                             <i class="bi bi-person-check-fill"></i> Registro de Visitantes
                         </a>
                     </li>
-                </ul>
+
                 <!-- INCIDENTE EN RUTA-->
                 <li class="nav-item">
                     <a class="nav-link offcanvas-nav-link" href="{{ route('incidentes_ruta.index') }}">
                         <i class="bi bi-exclamation-triangle-fill"></i> Incidentes en Ruta
                     </a>
                 </li>
-
-
+                </ul>
                 <!-- Perfil -->
+                    <ul>
                 <li class="nav-item dropdown">
 
                     <!-- BOTÓN CERRAR SESIÓN -->
@@ -918,6 +918,7 @@
                         </form>
                     @endif
                 </li>
+                    </ul>
             </div> <!-- FIN OFFCANVAS BODY -->
 
         </div>
@@ -1273,7 +1274,7 @@
         });
     });
 </script>
-</body>
+
 
 <script>
     const toggle = document.getElementById('darkModeToggle');
@@ -1295,6 +1296,5 @@
         }
     });
 </script>
-
-
+</body>
 </html>

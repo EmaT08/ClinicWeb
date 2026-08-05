@@ -449,7 +449,6 @@
                         {{-- Orden corregido: Confirmar primero, Cancelar después --}}
                         <button type="submit" class="btn-custom btn-custom-confirm">Crear Registro</button>
                         <a href="{{ url('/') }}" class="btn-custom btn-custom-cancel">Cancelar</a>
-                        <button type="submit" class="btn-custom btn-custom-confirm">Crear Registro</button>
                     </div>
                 </form>
             </div>
