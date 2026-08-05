@@ -768,13 +768,6 @@
                         </div>
                     </div>
 
-                    <h3 class="section-title">Información Médica</h3>
-                    <div class="form-group full-width">
-                        <label for="sintomas_actuales">Síntomas Actuales</label>
-                        <div class="input-wrapper">
-                            <textarea class="form-control" id="sintomas_actuales" name="sintomas_actuales" rows="3" placeholder="Describa los síntomas que presenta el paciente"></textarea>
-                        </div>
-                    </div>
                     <!-- Síntomas y Diagnóstico -->
                     <h3 class="section-title">Información Médica</h3>
                     <div class="form-group full-width">
