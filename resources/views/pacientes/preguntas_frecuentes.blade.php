@@ -386,11 +386,26 @@
             color: #fff !important;
             box-shadow: 0 0 10px rgba(220,53,69,0.5);
         }
+        .header h1 {
+            color: #0f766e;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
     </style>
 
     <div class="faq-public-container">
+
         <div class="faq-public-header">
+          @if(session('cargo') === 'Administrador'|| session('cargo') === 'Recepcionista')
+
             <h1 class="text-info-emphasis">Preguntas Frecuentes</h1>
+          @else
+                <div class=" text-center header">
+                    <h1> Preguntas Frecuentes</h1>
+                </div>
+          @endif
+
             @if(session('cargo') === 'Administrador'|| session('cargo') === 'Recepcionista')
                 <a href="{{ route('preguntas.create') }}" class="btn-add">
                   + Agregar Pregunta

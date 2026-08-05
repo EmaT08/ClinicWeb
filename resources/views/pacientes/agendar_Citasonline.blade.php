@@ -19,11 +19,13 @@
             padding: 30px 20px;
         }
 
-        h1 {
+        .header h1 {
+            margin-top: 30px;
             color: #0f766e;
             font-size: 2.5rem;
             margin-bottom: 30px;
             font-weight: 700;
+
         }
 
         .calendar-container {
@@ -1001,7 +1003,11 @@
     </style>
 
     <div class="calendar-wrapper">
-        <h1 class="text-center">Agenda de Citas Médicas</h1>
+
+        <div class=" text-center header">
+            <h1> Agenda de Citas Médicas </h1>
+        </div>
+
 
         <div id="alert-container" class="container" style="max-width: 700px;"></div>
 

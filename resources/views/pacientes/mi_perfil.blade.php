@@ -803,10 +803,20 @@
             border-color: #00f3ff;
             box-shadow: 0 0 10px rgba(0, 243, 255, 0.42);
         }
+        .header h1 {
+            color: #0f766e;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+
+        }
 
     </style>
     <br><br>
-    <h1 class="text-center text-info-emphasis" >Mi Perfil</h1>
+    <div class="text-center header">
+        <h1> Mi Perfil</h1>
+    </div>
+
     <div class="formulario">
         <div class="register-section">
             <div class="form-container">
