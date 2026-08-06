@@ -166,7 +166,8 @@
                         <input type="text" name="direccion_destino"
                                class="form-control @error('direccion_destino') is-invalid @enderror"
                                placeholder="Ingrese la dirección de destino"
-                               value="{{ old('direccion_destino') }}" required>
+                               value="{{ old('direccion_destino') }}"
+                               maxlength="255" required>
                         @error('direccion_destino')
                         <div class="invalid-feedback">La dirección de destino es requerida.</div>
                         @enderror
