@@ -458,8 +458,8 @@
                     <div class="filter-group">
                         <label><i class="fas fa-sort"></i> Ordenar por</label>
                         <select name="orden">
-                            <option value="fecha_asc" {{ request('orden') == 'fecha_asc' ? 'selected' : '' }}>Fecha (más próxima)</option>
-                            <option value="fecha_desc" {{ request('orden') == 'fecha_desc' ? 'selected' : '' }}>Fecha (más lejana)</option>
+                            <option value="fecha_asc" {{ request('orden') == 'fecha_asc' ? 'selected' : '' }}>Fecha más próxima</option>
+                            <option value="fecha_desc" {{ request('orden') == 'fecha_desc' ? 'selected' : '' }}>Fecha más lejana</option>
                         </select>
                     </div>
 
@@ -554,7 +554,7 @@
             @else
                 <div class="empty-state">
                     <i class="fas fa-calendar-times"></i>
-                    <h3>No hay citas programadas</h3>
+
                     <p>No tienes citas médicas en este momento</p>
                 </div>
             @endif
