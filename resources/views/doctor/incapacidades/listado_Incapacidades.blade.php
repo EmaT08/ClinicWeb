@@ -480,8 +480,8 @@
                             <tr>
                                 <td class="num-cell"></td>
                                 <td>{{ $inc->paciente->nombres }} {{ $inc->paciente->apellidos }}</td>
-                                <td>{{ $inc->fecha_inicio->isoFormat('D MMM YYYY') }}</td>
-                                <td>{{ $inc->fecha_fin->isoFormat('D MMM YYYY') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($inc->fecha_inicio)->format('d/m/Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($inc->fecha_fin)->format('d/m/Y') }}</td>
                                 <td><strong style="color:#00bfa6;">{{ $inc->cantidad_dias }}</strong></td>
                                 <td>
                                     <span class="badge-e {{ $inc->estado_clase }}">{{ $inc->estado_calculado }}</span>
@@ -497,8 +497,8 @@
                                             data-identidad="{{ $inc->paciente->numero_identidad}}"
                                             data-genero="{{ $empleado->genero ?? 'M' }}"
                                             data-telefono="{{ $inc->paciente->telefono}}"
-                                            data-inicio="{{ $inc->fecha_inicio->isoFormat('D MMM YYYY') }}"
-                                            data-fin="{{ $inc->fecha_fin->isoFormat('D MMM YYYY') }}"
+                                            data-inicio="{{ \Carbon\Carbon::parse($inc->fecha_inicio)->format('d/m/Y') }}"
+                                            data-fin="{{ \Carbon\Carbon::parse($inc->fecha_fin)->format('d/m/Y') }}"
                                             data-dias="{{ $inc->cantidad_dias }}"
                                             data-motivo="{{ $inc->motivo }}">
                                         Ver

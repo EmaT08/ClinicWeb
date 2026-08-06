@@ -532,7 +532,7 @@
                                         <span style="color: #27ae60; font-weight: 600;">Normal</span>
                                     @endif
                                 </td>
-                                <td>{{$inventario->fecha_vencimiento}}</td>
+                                <td>{{ \Carbon\Carbon::parse($inventario->fecha_vencimiento)->format('d/m/Y') }}</td>
                                 <td>
                                     <div class="action-buttons">
                                         <a class="btn-sm btn-edit" href="{{route('inventario.edit', ['id'=>$inventario->id])}}" style="text-decoration-line: none">
