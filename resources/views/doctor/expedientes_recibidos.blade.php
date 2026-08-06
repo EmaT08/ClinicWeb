@@ -346,7 +346,7 @@
     </style>
 
     <div class="main-container">
-        <h2 class="text-info-emphasis" style="text-align:left;">Expedientes Recibidos</h2>
+        <h1 class="text-info-emphasis" style="text-align:left;">Expedientes Recibidos</h1>
 
         <!-- Estadísticas de Expedientes -->
         <div class="stats-grid">

@@ -97,7 +97,7 @@
 
     <div class="eval-container">
         <div class="eval-header">
-            <h2><i class="bi bi-clipboard2-pulse me-2"></i>Evaluación Prequirúrgica</h2>
+            <h1><i class="bi bi-clipboard2-pulse me-2"></i>Evaluación Prequirúrgica</h1>
             <p>Complete el formulario de evaluación para habilitar el agendamiento de cirugía</p>
         </div>
 

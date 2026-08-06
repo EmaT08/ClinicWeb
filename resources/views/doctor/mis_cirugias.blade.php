@@ -44,35 +44,73 @@
 
         .filters-card {
             background: white;
-            border-radius: 14px;
-            padding: 22px;
-            margin-bottom: 25px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
-        .filters-row { display: flex; flex-wrap: wrap; gap: 15px; align-items: flex-end; }
-        .filter-group label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; color: #444; }
-        .filter-group input, .filter-group select {
-            padding: 10px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+
+        .filters-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group:last-child {
+            flex: 0;
+            min-width: 12%;
+            margin-left: auto;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
             font-size: 0.9rem;
-            min-width: 160px;
         }
-        .filter-group input:focus, .filter-group select:focus {
-            border-color: #4ECDC4;
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f8fffe;
+            transition: all 0.3s ease;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
             outline: none;
+            border-color: #4ECDC4;
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
         }
+
         .btn-filter {
-            padding: 10px 25px;
-            background: #4ECDC4;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }
-        .btn-filter:hover { background: #45b8b0; }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+        }
 
         .list-card {
             background: white;
@@ -118,12 +156,15 @@
         .empty-state { text-align: center; padding: 60px 20px; color: #aaa; }
         .empty-state i { font-size: 4rem; margin-bottom: 18px; display: block; color: #ccc; }
         .empty-state h3 { color: #555; }
+
+        .text-info-emphasis {
+            font-weight: bold;
+        }
     </style>
 
     <div class="cirugias-container">
         <div class="page-header">
-            <h1></i>Mis Citas Quirúrgicas</h1>
-            <p>Cirugías programadas asignadas a tu servicio</p>
+            <h1 class="text-info-emphasis" style="text-align:left;">Mis Citas Quirúrgicas</h1>
         </div>
 
         @if(session('success'))
