@@ -93,58 +93,102 @@
     }
 
     /* Filter Bar */
+    /* Filter Bar */
     .filter-bar {
         background: white;
         border-radius: 16px;
-        padding: 1.25rem 1.5rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         margin-bottom: 1.5rem;
-        border: 1px solid rgba(78, 205, 196, 0.18);
+    }
+
+    .filter-bar .filters-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .filter-bar .filter-group {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .filter-bar .filter-group.filter-actions {
+        flex: 1;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .filter-bar .filter-group.filter-actions .btn-filter,
+    .filter-bar .filter-group.filter-actions .btn-clear {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .filter-bar .filter-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+        font-size: 0.9rem;
     }
 
     .filter-bar .form-control,
     .filter-bar .form-select {
-        border: 2px solid #e8f4f8;
-        border-radius: 10px;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #f8fffe;
         transition: all 0.3s ease;
     }
 
     .filter-bar .form-control:focus,
     .filter-bar .form-select:focus {
-        border-color: #4ecdc4;
-        box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.18);
+        outline: none;
+        border-color: #4ECDC4;
+        box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
     }
 
     .filter-bar .btn-filter {
-        background: linear-gradient(135deg, #4ecdc4, #00ffe7);
-        color: black;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+        color: white;
         border: none;
         border-radius: 10px;
-        padding: 0.6rem 1.5rem;
-        font-weight: 700;
+        font-weight: 600;
+        cursor: pointer;
         transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
     }
 
     .filter-bar .btn-filter:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0, 255, 231, 0.25);
+        box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
     }
 
     .filter-bar .btn-clear {
+        padding: 12px 24px;
         background: white;
-        border: 2px solid #dee2e6;
+        border: 2px solid #6c757d;
         border-radius: 10px;
-        padding: 0.6rem 1.25rem;
-        font-weight: 600;
         color: #6c757d;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
         transition: all 0.3s ease;
     }
 
     .filter-bar .btn-clear:hover {
-        border-color: #dc3545;
-        color: #dc3545;
+        background: #6c757d;
+        color: white;
+        transform: translateY(-2px);
     }
 
     /* Calendar Container */
@@ -591,6 +635,7 @@
             height: 36px;
         }
     }
+
 </style>
 
 @section('contenido')
@@ -665,39 +710,34 @@
 
             {{-- Filter --}}
             <div class="filter-bar">
-                <form method="GET" action="{{ route('doctor.turnos') }}" class="row g-2 align-items-end">
+                <form method="GET" action="{{ route('doctor.turnos') }}">
                     <input type="hidden" name="mes" value="{{ $mes }}">
                     <input type="hidden" name="anio" value="{{ $anio }}">
-                    <div class="col-md-4">
-                        <label class="form-label fw-semibold" style="font-size:0.85rem;">
-                            <i class="bi bi-search me-1"></i>Buscar Doctor
-                        </label>
-                        <input type="text" name="nombre" class="form-control" placeholder="Nombre del doctor..."
-                               value="{{ request('nombre') }}">
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label fw-semibold" style="font-size:0.85rem;">
-                            <i class="bi bi-heart-pulse me-1"></i>Especialidad
-                        </label>
-                        <select name="departamento" class="form-select">
-                            <option value="">Todas</option>
-                            @foreach($departamentos as $dep)
-                                <option value="{{ $dep }}" {{ request('departamento') == $dep ? 'selected' : '' }}>
-                                    {{ $dep }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-filter">
-                            <i class="bi bi-funnel me-1"></i>Filtrar
-                        </button>
-                    </div>
-                    <div class="col-auto">
-                        <a href="{{ route('recepcionista.index', ['mes' => $mes, 'anio' => $anio]) }}"
-                           class="btn btn-clear">
-                            <i class="bi bi-x-lg me-1"></i>Limpiar
-                        </a>
+                    <div class="filters-row">
+                        <div class="filter-group">
+                            <label><i class="bi bi-search me-1"></i>Buscar Doctor</label>
+                            <input type="text" name="nombre" class="form-control" placeholder="Nombre del doctor..."
+                                   value="{{ request('nombre') }}">
+                        </div>
+                        <div class="filter-group">
+                            <label><i class="bi bi-heart-pulse me-1"></i>Especialidad</label>
+                            <select name="departamento" class="form-select">
+                                <option value="">Todas</option>
+                                @foreach($departamentos as $dep)
+                                    <option value="{{ $dep }}" {{ request('departamento') == $dep ? 'selected' : '' }}>
+                                        {{ $dep }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="filter-group filter-actions">
+                            <button type="submit" class="btn-filter">
+                                <i class="bi bi-funnel me-1"></i>Filtrar
+                            </button>
+                            <a href="{{ route('doctor.turnos', ['mes' => $mes, 'anio' => $anio]) }}" class="btn-clear">
+                                <i class="bi bi-x-lg me-1"></i>Limpiar
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -347,7 +347,7 @@
             @endif
 
             <div class="page-header" style=" align-items: center; margin-bottom: 30px;">
-                <h1 class=" text-info-emphasis" style="margin: 0;">
+                <h1 class=" text-info-emphasis" style="text-align:left;">
                     Pacientes Hospitalizados
                 </h1>
 

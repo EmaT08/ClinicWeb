@@ -1,4 +1,5 @@
 @extends('layouts.plantillaEnfermeria')
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('titulo', 'Detalle del Incidente')
 @section('contenido')
 
@@ -136,24 +137,24 @@
         }
 
         /* Botones simétricos estilo formulario.css */
-        .btn-actualizar {
-            padding: 0.875rem 2rem;
+        .btn-actualizar {padding: 0.875rem 2rem;
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             border: none;
             border-radius: 8px;
             color: white;
             font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(78,205,196,0.3);
+            font-size: 1.1rem;
             cursor: pointer;
-            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+            flex: 1;
+            text-align: center;
         }
 
         .btn-actualizar:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(78,205,196,0.4);
-            color: white;
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.4);
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
         }
 
         .btn-volver {
@@ -188,22 +189,71 @@
             align-items: center;
             gap: 10px;
         }
+
+        .text-info-emphasis{
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            display: block;
+        }
+
+        .form-values {
+            color: #555;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-values:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 0 3px rgba(78,205,196,0.1);
+            background: white;
+        }
+
+
+
+        .formulario .btn-cancel {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid #dc3545;
+            border-radius: 8px;
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .formulario .btn-cancel:hover {
+            background: #dc3545;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
     </style>
+    <br> <br>
+    <div class="formulario">
 
-    <div class="detalle-container">
-        <div class="detalle-card">
 
-            <div class="detalle-header">
-                <h1>
-                    <i class="bi bi-clipboard2-pulse"></i>
-                    Detalle del Incidente #{{ str_pad($incidente->id, 4, '0', STR_PAD_LEFT) }}
-                </h1>
-                <p style="margin:0; opacity:0.9;">
-                    Registrado el {{ $incidente->created_at->format('d/m/Y \a \l\a\s H:i') }}
-                </p>
-            </div>
+    <div class="register-section" style="margin-top: 70px">
+        <h1 class="text-center text-info-emphasis">Detalle del Incidente</h1>
+        <br>
+        <div class="form-container" >
 
-            <div class="detalle-body">
+
 
                 @if(session('success'))
                     <div class="alert-success-detalle">
@@ -216,19 +266,21 @@
                 <div class="info-section">
                     <h5><i class="bi bi-calendar2-week"></i> Fechas del Incidente</h5>
                     <div class="fechas-grid">
-                        <div class="fecha-card">
-                            <div class="fecha-titulo">
-                                <i class="bi bi-calendar-event"></i> Fecha del Incidente
+                        <div >
+                            <div>
+                                <div class="form-label">Fecha del Incidente</div>
+
                             </div>
-                            <div class="fecha-valor">
+                            <div class="form-values">
                                 {{ \Carbon\Carbon::parse($incidente->fecha_hora_incidente)->format('d/m/Y H:i') }}
                             </div>
                         </div>
-                        <div class="fecha-card">
-                            <div class="fecha-titulo">
-                                <i class="bi bi-clock"></i> Fecha de Registro
+                        <div >
+                            <div>
+                                <div class="form-label">Fecha de Registro</div>
+
                             </div>
-                            <div class="fecha-valor">
+                            <div class="form-values">
                                 {{ $incidente->created_at->format('d/m/Y H:i') }}
                             </div>
                         </div>
@@ -239,22 +291,22 @@
                 <div class="info-section">
                     <h5><i class="bi bi-info-circle"></i> Información General</h5>
                     <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Tipo de Incidente</div>
-                            <div class="info-value">{{ $incidente->tipo_incidente }}</div>
+                        <div >
+                            <div class="form-label">Tipo de Incidente</div>
+                            <div class="form-values">{{ $incidente->tipo_incidente }}</div>
                         </div>
-                        <div class="info-item">
-                            <div class="info-label">Estado Actual</div>
-                            <div class="info-value">
-                            <span class="badge-detalle badge-{{ $incidente->estado == 'Pendiente' ? 'pendiente' : ($incidente->estado == 'En Revisión' ? 'revision' : 'resuelto') }}">
-                                {{ $incidente->estado }}
+                        <div >
+                            <div class="form-label">Estado Actual</div>
+                            <div class="form-values">
+                            <span>
+                                {{ $incidente->estado == 'Pendiente' ? 'pendiente' : ($incidente->estado == 'En Revisión' ? 'Revision' : 'Resuelto') }}
                             </span>
                             </div>
                         </div>
-                        <div class="info-item">
-                            <div class="info-label">Gravedad</div>
-                            <div class="info-value">
-                            <span class="badge-detalle badge-{{ strtolower($incidente->gravedad) }}">
+                        <div >
+                            <div class="form-label">Gravedad</div>
+                            <div class="form-values">
+                            <span>
                                 {{ $incidente->gravedad }}
                             </span>
                             </div>
@@ -266,17 +318,20 @@
                 <div class="info-section">
                     <h5><i class="bi bi-people"></i> Personas Involucradas</h5>
                     <div class="info-grid">
-                        <div class="info-item">
-                            <div class="info-label">Paciente</div>
-                            <div class="info-value">
-                                {{ $incidente->paciente->nombres }} {{ $incidente->paciente->apellidos }}
+                        <div >
+                            <div class=form-label>Paciente</div>
+                            <div class="form-values">
+                                {{ $incidente->paciente->nombres }} {{ $incidente->paciente->apellidos }} <br>
+                                <small style="color:#888;">ID: {{ $incidente->paciente->numero_identidad }}</small>
                             </div>
-                            <small style="color:#888;">ID: {{ $incidente->paciente->numero_identidad }}</small>
+
                         </div>
-                        <div class="info-item">
-                            <div class="info-label">Reportado Por</div>
-                            <div class="info-value">{{ $incidente->empleado_nombre }}</div>
-                            <small style="color:#888;">Enfermero(a)</small>
+                        <div >
+                            <div class=form-label>Reportado Por</div>
+                            <div class="form-values">{{ $incidente->empleado_nombre }}
+                                <small style="color:#888;">Enfermero(a)</small>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -284,7 +339,7 @@
                 {{-- DESCRIPCIÓN --}}
                 <div class="info-section">
                     <h5><i class="bi bi-file-text"></i> Descripción del Incidente</h5>
-                    <div class="descripcion-box">
+                    <div class="form-values">
                         <p>{{ $incidente->descripcion }}</p>
                     </div>
                 </div>
@@ -301,35 +356,28 @@
 
                 {{-- CAMBIAR ESTADO --}}
                 <div class="info-section">
-                    <div class="estado-form">
-                        <h6><i class="bi bi-arrow-repeat"></i> Actualizar Estado del Incidente</h6>
+                    <div >
+                        <h5><i class="bi bi-arrow-repeat"></i> Actualizar Estado del Incidente</h5>
                         <form action="{{ route('incidentes.actualizar-estado', $incidente->id) }}" method="POST" class="row g-3">
                             @csrf
                             @method('PUT')
-                            <div class="col-md-8">
-                                <select name="estado" class="form-select" required
+                            <div >
+                                <select name="estado" class="form-values" required
                                         style="padding:0.75rem 1rem; border:2px solid #e0e0e0; border-radius:8px; font-size:1rem;">
                                     <option value="Pendiente"   {{ $incidente->estado == 'Pendiente'   ? 'selected' : '' }}>Pendiente</option>
                                     <option value="En Revisión" {{ $incidente->estado == 'En Revisión' ? 'selected' : '' }}>En Revisión</option>
                                     <option value="Resuelto"    {{ $incidente->estado == 'Resuelto'    ? 'selected' : '' }}>Resuelto</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="d-flex gap-3 mt-4">
                                 <button type="submit" class="btn-actualizar">Actualizar</button>
+                                <a class="btn-cancel" href="{{ route('incidentes.index') }}" style="text-decoration-line: none">Cancelar</a>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                {{-- VOLVER --}}
-                <div class="text-end mt-4">
-                    <a href="{{ route('incidentes.index') }}" class="btn-volver">
-                        <i class="bi bi-arrow-left"></i> Volver al Listado
-                    </a>
-                </div>
 
-            </div>
         </div>
-    </div>
 
 @endsection

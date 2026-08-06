@@ -386,9 +386,9 @@
         <!-- Header -->
         <br><br>
         <div class="header">
-            <h2 class="text-info-emphasis" style="text-align:left;">
+            <h1 class="text-info-emphasis" style="text-align:left;">
                 Mis Citas Programadas
-            </h2>
+            </h1>
         </div>
 
         <!-- Estadísticas -->

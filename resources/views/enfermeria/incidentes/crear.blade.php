@@ -1,4 +1,5 @@
 @extends('layouts.plantillaEnfermeria')
+<link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 @section('titulo', 'Registrar Incidente')
 @section('contenido')
 
@@ -403,9 +404,12 @@
                 width: 100%;
             }
         }
-    </style>
 
-    <div class="page-wrapper">
+        .text-info-emphasis{
+            font-weight: bold;
+        }
+    </style>
+    <div class="formulario">
         @if(session('success'))
             <div class="alert alert-success" style="max-width:750px; margin: 0 auto 20px;">
                 <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
@@ -420,9 +424,13 @@
             </div>
         @endif
 
+
+                <div class="register-section" style="margin-top: 70px">
+                    <h1 class="text-center text-info-emphasis">Registrar Incidente</h1>
+                </div>
+
         <div class="form-container">
-            <h1 class="form-title">Registrar Incidente</h1>
-            <p class="form-subtitle">Complete el formulario con los detalles del incidente</p>
+
 
             <form action="{{ route('incidentes.guardar') }}" method="POST">
                 @csrf
@@ -430,20 +438,18 @@
                 {{-- FECHAS --}}
                 <div class="form-group">
                     <div class="fechas-grid">
-                        <div class="fecha-box">
-                            <div class="fecha-titulo">
-                                <i class="bi bi-calendar-event"></i> Fecha del Incidente
+                        <div >
+                            <div class="form-label">
+                                <i class="bi bi-calendar-event" style="color:#4ecdc4;"></i> Fecha del Incidente
                             </div>
                             <input type="datetime-local" class="form-control" name="fecha_hora_incidente"
                                    value="{{ old('fecha_hora_incidente') }}" required>
-                            <small class="text-muted">Seleccione la fecha y hora aproximada del incidente</small>
                         </div>
-                        <div class="fecha-box">
-                            <div class="fecha-titulo">
-                                <i class="bi bi-clock"></i> Fecha de Registro
+                        <div >
+                            <div class="form-label">
+                                <i class="bi bi-clock" style="color:#4ecdc4;"></i> Fecha de Registro
                             </div>
                             <input type="text" class="form-control" value="{{ now()->format('d/m/Y H:i') }}" readonly>
-                            <small class="text-muted">Esta se genera automáticamente</small>
                         </div>
                     </div>
                 </div>
