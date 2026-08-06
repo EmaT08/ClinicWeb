@@ -838,14 +838,14 @@
 
                 <div class="profile-card">
                     <div class="profile-header">
-                      <div class="profile-photo-wrapper">
-                        <div class="profile-photo">
-                            @if($paciente->foto)
-                                <img src="{{ asset('storage/' . $paciente->foto) }}" alt="Foto de perfil" id="profileImage">
-                            @else
-                                <span id="profileInitials">{{ strtoupper(substr($paciente->nombres, 0, 1) . substr($paciente->apellidos, 0, 1)) }}</span>
-                            @endif
-                        </div>
+                        <div class="profile-photo-wrapper">
+                            <div class="profile-photo">
+                                @if($paciente->foto)
+                                    <img src="{{ asset('storage/' . $paciente->foto) }}" alt="Foto de perfil" id="profileImage">
+                                @else
+                                    <span id="profileInitials">{{ strtoupper(substr($paciente->nombres, 0, 1) . substr($paciente->apellidos, 0, 1)) }}</span>
+                                @endif
+                            </div>
 
                             <!-- Botón de editar foto que abre el modal -->
                             <button type="button" class="edit-photo-btn" data-bs-toggle="modal" data-bs-target="#modalFotoPaciente" title="Cambiar foto">
@@ -872,7 +872,7 @@
                                 Fecha de Nacimiento
                             </div>
                             <div class="detail-value">
-                                {{ $paciente->fecha_nacimiento}}
+                                {{ \Carbon\Carbon::parse($paciente->fecha_nacimiento)->format('d/m/Y') }}
                             </div>
                         </div>
 
@@ -997,12 +997,12 @@
 
                             @error('foto')
                             <div class="invalid-feedback d-block">
-                               {{ $message }}
+                                {{ $message }}
                             </div>
                             @enderror
 
                             <div class="invalid-feedback" id="errorFotoPaciente">
-                              Por favor selecciona una imagen válida
+                                Por favor selecciona una imagen válida
                             </div>
 
                         </div>
