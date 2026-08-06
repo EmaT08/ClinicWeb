@@ -3,6 +3,9 @@
     $pendientes = Cita::where('empleado_id', session('empleado_id'))
     ->whereIn('estado', ['programada','pendiente'])
     ->count();
+
+    // Permite cambiar la navegación del doctor según esté o no en la página principal.
+    $doctorEnInicio = request()->routeIs('/') || request()->is('/');
 @endphp
 
     <!doctype html>
@@ -529,6 +532,218 @@
         }
 
 
+        /* =========================================================
+           ERROR 4: PANEL LATERAL DE ACCIONES
+           En escritorio reserva su propio espacio y no tapa contenido.
+           En pantallas pequeñas funciona como panel superpuesto.
+        ========================================================== */
+        :root {
+            --acciones-panel-width: 330px;
+            --navbar-doctor-height: 72px;
+        }
+
+        #btnAccionesDoctor,
+        #btnAccionesDoctorMobile {
+            border: 0;
+            background: transparent;
+        }
+
+        #btnAccionesDoctor.active {
+            color: #ffffff !important;
+            text-shadow: 0 0 10px #00ffe0, 0 0 20px #00d3b8;
+        }
+
+        .btn-acciones-mobile {
+            width: 44px;
+            height: 44px;
+            margin-left: auto;
+            margin-right: 0.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.85) !important;
+            border-radius: 10px;
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.25s ease;
+        }
+
+        .btn-acciones-mobile:hover,
+        .btn-acciones-mobile:focus {
+            background: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+        }
+
+        .acciones-doctor-panel {
+            position: fixed;
+            top: var(--navbar-doctor-height);
+            right: 0;
+            bottom: 0;
+            width: var(--acciones-panel-width);
+            z-index: 1025;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, #00bfa6 0%, #009e8e 100%);
+            color: #ffffff;
+            box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
+            transform: translateX(100%);
+            visibility: hidden;
+            transition: transform 0.3s ease, visibility 0.3s ease;
+        }
+
+        body.acciones-panel-abierto .acciones-doctor-panel {
+            transform: translateX(0);
+            visibility: visible;
+        }
+
+        .acciones-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.25rem 1.25rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+        }
+
+        .acciones-panel-title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .acciones-panel-close {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.45rem;
+            transition: all 0.25s ease;
+        }
+
+        .acciones-panel-close:hover,
+        .acciones-panel-close:focus {
+            background: rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            transform: rotate(90deg);
+        }
+
+        .acciones-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.75rem;
+        }
+
+        .acciones-panel-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .acciones-panel-link {
+            width: 100%;
+            min-height: 52px;
+            padding: 0.75rem 0.9rem;
+            border-radius: 10px;
+            color: #e7fffc;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 500;
+            transition: all 0.25s ease;
+        }
+
+        .acciones-panel-link i {
+            width: 24px;
+            flex: 0 0 24px;
+            text-align: center;
+            font-size: 1.15rem;
+        }
+
+        .acciones-panel-link:hover,
+        .acciones-panel-link:focus,
+        .acciones-panel-link.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.18);
+            text-shadow: 0 0 7px rgba(255, 255, 255, 0.55);
+            transform: translateX(3px);
+        }
+
+        .acciones-panel-body::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .acciones-panel-body::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.10);
+        }
+
+        .acciones-panel-body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.55);
+            border-radius: 10px;
+        }
+
+        .acciones-panel-backdrop {
+            display: none;
+        }
+
+        /* Contenedor que adapta el ancho real de toda la página del doctor. */
+        .doctor-page-shell {
+            width: 100%;
+            min-width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .doctor-page-shell main.contenido,
+        .doctor-page-shell footer.footer-modern {
+            width: 100%;
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        @media (min-width: 992px) {
+            body.acciones-panel-abierto .doctor-page-shell {
+                width: calc(100% - var(--acciones-panel-width));
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            :root {
+                --acciones-panel-width: min(88vw, 330px);
+            }
+
+            .acciones-doctor-panel {
+                top: 0;
+                z-index: 1060;
+            }
+
+            body.acciones-panel-abierto {
+                overflow: hidden;
+            }
+
+            .acciones-panel-backdrop {
+                position: fixed;
+                inset: 0;
+                z-index: 1055;
+                display: block;
+                background: rgba(0, 0, 0, 0.45);
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+
+            body.acciones-panel-abierto .acciones-panel-backdrop {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -539,6 +754,16 @@
         <a class="navbar-brand d-flex align-items-center fw-bold text-white" href="{{ route('/') }}">
             ClinicWeb
         </a>
+
+        <!-- Acceso a Acciones en pantallas pequeñas -->
+        <button type="button"
+                class="btn-acciones-mobile d-lg-none"
+                id="btnAccionesDoctorMobile"
+                aria-label="Abrir acciones del doctor"
+                aria-controls="accionesDoctorPanel"
+                aria-expanded="false">
+            <i class="bi bi-lightning-fill"></i>
+        </button>
 
         <!-- Botón móvil -->
         <button class="navbar-toggler collapsed" type="button"
@@ -551,91 +776,71 @@
         <!-- Desktop menu -->
 
         <ul class="navbar-nav flex-row ms-auto me-3 gap-2 d-none d-lg-flex">
-            <!-- Inicio -->
+            <!-- Inicio: siempre disponible para el doctor -->
             <li class="nav-item">
-                <a class="nav-link nav-link-glow {{ request()->routeIs('/') ? 'active' : '' }}" href="{{ route('/') }}">
+                <a class="nav-link nav-link-glow {{ $doctorEnInicio ? 'active' : '' }}" href="{{ route('/') }}">
                     <i class="bi bi-house-door-fill me-1"></i> Inicio
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link nav-link-modern"
-                   href="{{ request()->routeIs('/') ? '#servicios' : url('/#servicios') }}">
-                    <i class="bi bi-info-circle-fill me-1"></i>Información</a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link nav-link-modern"
-                   href="{{ request()->routeIs('/') ? '#doctors' : url('/#doctors') }}">
-                    <i class="bi bi-person-fill me-1"></i> Doctores</a>
-            </li>
+            @if($doctorEnInicio)
+                <!-- En el index se conservan las opciones públicas actuales -->
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern" href="#servicios">
+                        <i class="bi bi-info-circle-fill me-1"></i>Información
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link nav-link-modern"
-                   href="{{ request()->routeIs('/') ? '#comentarios' : url('/#comentarios') }}">
-                    <i class="bi bi-chat-right-text me-1"></i> Comentarios</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern" href="#doctors">
+                        <i class="bi bi-person-fill me-1"></i> Doctores
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
-                    <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern" href="#comentarios">
+                        <i class="bi bi-chat-right-text me-1"></i> Comentarios
+                    </a>
+                </li>
 
-            <!-- Acciones -->
-            <li class="nav-item dropdown">
-                <a class="nav-link nav-link-glow dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                   aria-expanded="false">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-modern" href="{{ route('preguntas.publico') }}">
+                        <i class="bi bi-question-circle me-1"></i> Preguntas Frecuentes
+                    </a>
+                </li>
+            @else
+                <!-- Fuera del index se muestran accesos médicos directos -->
+                <li class="nav-item">
+                    <a class="nav-link nav-link-glow {{ request()->routeIs('doctor.citas') ? 'active' : '' }}"
+                       href="{{ route('doctor.citas') }}">
+                        <i class="bi bi-calendar-check me-1"></i> Citas Programadas
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-glow {{ request()->routeIs('doctor.habitaciones.mis-pacientes') ? 'active' : '' }}"
+                       href="{{ route('doctor.habitaciones.mis-pacientes') }}">
+                        <i class="bi bi-hospital me-1"></i> Pacientes Hospitalizados
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link nav-link-glow {{ request()->routeIs('doctor.turnos') ? 'active' : '' }}"
+                       href="{{ route('doctor.turnos') }}">
+                        <i class="bi bi-clock-history me-1"></i> Ver Rol de Turnos
+                    </a>
+                </li>
+            @endif
+
+            <!-- Acciones: abre el panel lateral adaptable -->
+            <li class="nav-item">
+                <button type="button"
+                        class="nav-link nav-link-glow"
+                        id="btnAccionesDoctor"
+                        aria-controls="accionesDoctorPanel"
+                        aria-expanded="false">
                     <i class="bi bi-lightning-fill me-1"></i> Acciones
-                </a>
-                <ul class="dropdown-menu dropdown-menu-modern">
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.citas') }}">
-                            <i class="bi bi-calendar-check me-1"></i> Citas Programadas
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('recetamedica') }}">
-                            <i class="bi bi-prescription2 me-1"></i> Generar Receta
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern"
-                           href="{{ route('doctor.habitaciones.mis-pacientes') }}">
-                            <i class="bi bi-hospital me-1"></i> Pacientes Hospitalizados
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.expedientesRecibidos') }}">
-                            <i class="bi bi-folder2-open me-1"></i> Expedientes Recibidos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.alta_pacientes') }}">
-                            <i class="bi bi-clipboard-check-fill"></i> Historial de Altas
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.citaSeguimiento') }}">
-                            <i class="bi bi-calendar-plus"></i> Citas de Seguimiento
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.mis-cirugias') }}">
-                            <i class="bi bi-scissors me-1"></i> Mis Cirugías
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.listaIncapacidades') }}">
-                            <i class="bi bi-person-badge-fill"></i> Ver Incapacidades
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item dropdown-item-modern" href="{{ route('doctor.turnos') }}">
-                            <i class="bi bi-clock-history"></i> Ver Rol de Turnos
-                        </a>
-                    </li>
-                </ul>
+                </button>
             </li>
 
             <li class="nav-item position-relative">
@@ -644,103 +849,280 @@
 
                     @if($pendientes > 0)
                         <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
-                {{ $pendientes }}
-            </span>
+                            {{ $pendientes }}
+                        </span>
                     @endif
                 </a>
             </li>
 
+            @php
+                $empleadoId = session('empleado_id');
+                $empleado = \App\Models\Empleado::find($empleadoId);
+            @endphp
 
+            <div style="position: relative; display: inline-block; margin-right: 8px;">
+                @if($empleado && $empleado->foto)
+                    <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
+                         alt="Foto"
+                         style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffe0;">
+                @else
+                    <i class="bi bi-person-circle" style="font-size: 35px; color: #e7fffc;"></i>
+                @endif
 
-                    @php
-                        $empleadoId = session('empleado_id');
-                        $empleado = \App\Models\Empleado::find($empleadoId);
-                    @endphp
-
-                    <div style="position: relative; display: inline-block; margin-right: 8px;">
-                        @if($empleado && $empleado->foto)
-                            <img src="data:image/jpeg;base64,{{ base64_encode($empleado->foto) }}"
-                                 alt="Foto"
-                                 style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid #00ffe0;">
-                        @else
-                            <i class="bi bi-person-circle" style="font-size: 35px; color: #e7fffc;"></i>
-                        @endif
-
-
-                        <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoDoctor"
-                              onclick="event.stopPropagation();">
-                         <i class="bi bi-camera-fill"></i>
-                         </span>
-                    </div>
+                <span class="edit-icon-overlay" data-bs-toggle="modal" data-bs-target="#modalFotoDoctor"
+                      onclick="event.stopPropagation();">
+                    <i class="bi bi-camera-fill"></i>
+                </span>
+            </div>
 
             <!-- Perfil -->
             <a class="nav-link nav-link-glow dropdown-toggle profile-badge" href="#" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
+                {{ session('empleado_nombre') ?? 'Empleado' }}
+            </a>
 
-                    {{ session('empleado_nombre') ?? 'Empleado' }}
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
-                    <li>
-                        <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
-                            @csrf
-                            <button type="submit" class="btn btn-logout w-100">
-                                Cerrar Sesión
-                            </button>
-                        </form>
-                    </li>
-                </ul>
+            <ul class="dropdown-menu dropdown-menu-modern dropdown-menu-end">
+                <li>
+                    <form action="{{ route('empleados.logout') }}" method="POST" class="px-3 py-1">
+                        @csrf
+                        <button type="submit" class="btn btn-logout w-100">
+                            Cerrar Sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
         </ul>
     </div>
 </nav>
 
-<main class="contenido container-fluid p-0 mt-0 pt-0">
-    @yield('contenido')
-</main>
+<!-- Panel lateral de acciones del doctor -->
+<aside class="acciones-doctor-panel"
+       id="accionesDoctorPanel"
+       aria-hidden="true"
+       aria-labelledby="accionesDoctorTitulo">
+    <div class="acciones-panel-header">
+        <h2 class="acciones-panel-title" id="accionesDoctorTitulo">
+            <i class="bi bi-lightning-fill me-2"></i>Acciones del doctor
+        </h2>
+        <button type="button"
+                class="acciones-panel-close"
+                id="cerrarAccionesDoctor"
+                aria-label="Cerrar acciones del doctor">
+            <i class="bi bi-x-lg"></i>
+        </button>
+    </div>
 
-<footer class="footer-modern mt-5">
-    <div class="container py-5">
-        <div class="row gy-4">
+    <div class="acciones-panel-body">
+        <ul class="acciones-panel-list">
+            @if($doctorEnInicio)
+                <li>
+                    <a class="acciones-panel-link {{ request()->routeIs('doctor.citas') ? 'active' : '' }}"
+                       href="{{ route('doctor.citas') }}">
+                        <i class="bi bi-calendar-check"></i>
+                        <span>Citas Programadas</span>
+                    </a>
+                </li>
+            @endif
+            <li>
+                <a class="acciones-panel-link {{ request()->routeIs('recetamedica') ? 'active' : '' }}"
+                   href="{{ route('recetamedica') }}">
+                    <i class="bi bi-prescription2"></i>
+                    <span>Generar Receta</span>
+                </a>
+            </li>
+            @if($doctorEnInicio)
+                <li>
+                    <a class="acciones-panel-link {{ request()->routeIs('doctor.habitaciones.mis-pacientes') ? 'active' : '' }}"
+                       href="{{ route('doctor.habitaciones.mis-pacientes') }}">
+                        <i class="bi bi-hospital"></i>
+                        <span>Pacientes Hospitalizados</span>
+                    </a>
+                </li>
+            @endif
+            <li>
+                <a class="acciones-panel-link {{ request()->routeIs('doctor.expedientesRecibidos') ? 'active' : '' }}"
+                   href="{{ route('doctor.expedientesRecibidos') }}">
+                    <i class="bi bi-folder2-open"></i>
+                    <span>Expedientes Recibidos</span>
+                </a>
+            </li>
+            <li>
+                <a class="acciones-panel-link {{ request()->routeIs('doctor.alta_pacientes') ? 'active' : '' }}"
+                   href="{{ route('doctor.alta_pacientes') }}">
+                    <i class="bi bi-clipboard-check-fill"></i>
+                    <span>Historial de Altas</span>
+                </a>
+            </li>
+            <li>
+                <a class="acciones-panel-link {{ request()->routeIs('doctor.citaSeguimiento') ? 'active' : '' }}"
+                   href="{{ route('doctor.citaSeguimiento') }}">
+                    <i class="bi bi-calendar-plus"></i>
+                    <span>Citas de Seguimiento</span>
+                </a>
+            </li>
+            <li>
+                <a class="acciones-panel-link {{ request()->routeIs('doctor.mis-cirugias') ? 'active' : '' }}"
+                   href="{{ route('doctor.mis-cirugias') }}">
+                    <i class="bi bi-scissors"></i>
+                    <span>Mis Cirugías</span>
+                </a>
+            </li>
+            <li>
+                <a class="acciones-panel-link {{ request()->routeIs('doctor.listaIncapacidades') ? 'active' : '' }}"
+                   href="{{ route('doctor.listaIncapacidades') }}">
+                    <i class="bi bi-person-badge-fill"></i>
+                    <span>Ver Incapacidades</span>
+                </a>
+            </li>
+            @if($doctorEnInicio)
+                <li>
+                    <a class="acciones-panel-link {{ request()->routeIs('doctor.turnos') ? 'active' : '' }}"
+                       href="{{ route('doctor.turnos') }}">
+                        <i class="bi bi-clock-history"></i>
+                        <span>Ver Rol de Turnos</span>
+                    </a>
+                </li>
+            @endif
+        </ul>
+    </div>
+</aside>
 
-            <!-- Columna 1 -->
-            <div class="col-md-4">
-                <h4 class="fw-bold text-white mb-3">ClinicWeb</h4>
-                <p class="footer-text">
-                    Gestión moderna de citas médicas con atención profesional y tecnología avanzada.
-                </p>
-            </div>
+<div class="acciones-panel-backdrop" id="accionesPanelBackdrop" aria-hidden="true"></div>
 
-            <!-- Columna 2 -->
-            <div class="col-md-4">
-                <h5 class="footer-title">Contacto</h5>
-                <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
-                <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
-                <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> contacto@clinicweb.hn
-                </p>
-            </div>
 
-            <!-- Columna 3 -->
-            <div class="col-md-4">
-                <h5 class="footer-title">Síguenos</h5>
-                <div class="d-flex gap-3">
-                    <a class="social modern" href="#"><i class="bi bi-facebook"></i></a>
-                    <a class="social modern" href="#"><i class="bi bi-instagram"></i></a>
-                    <a class="social modern" href="#"><i class="bi bi-twitter-x"></i></a>
-                    <a class="social modern" href="#"><i class="bi bi-whatsapp"></i></a>
+<div class="doctor-page-shell" id="doctorPageShell">
+    <main class="contenido container-fluid p-0 mt-0 pt-0">
+        @yield('contenido')
+    </main>
+
+    <footer class="footer-modern mt-5">
+        <div class="container py-5">
+            <div class="row gy-4">
+
+                <!-- Columna 1 -->
+                <div class="col-md-4">
+                    <h4 class="fw-bold text-white mb-3">ClinicWeb</h4>
+                    <p class="footer-text">
+                        Gestión moderna de citas médicas con atención profesional y tecnología avanzada.
+                    </p>
+                </div>
+
+                <!-- Columna 2 -->
+                <div class="col-md-4">
+                    <h5 class="footer-title">Contacto</h5>
+                    <p class="footer-text"><i class="bi bi-geo-alt-fill me-2"></i> Danlí, El Paraíso, Honduras</p>
+                    <p class="footer-text"><i class="bi bi-telephone-fill me-2"></i> +504 2234-5678</p>
+                    <p class="footer-text"><i class="bi bi-envelope-fill me-2"></i> contacto@clinicweb.hn
+                    </p>
+                </div>
+
+                <!-- Columna 3 -->
+                <div class="col-md-4">
+                    <h5 class="footer-title">Síguenos</h5>
+                    <div class="d-flex gap-3">
+                        <a class="social modern" href="#"><i class="bi bi-facebook"></i></a>
+                        <a class="social modern" href="#"><i class="bi bi-instagram"></i></a>
+                        <a class="social modern" href="#"><i class="bi bi-twitter-x"></i></a>
+                        <a class="social modern" href="#"><i class="bi bi-whatsapp"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <hr class="footer-divider">
+            <hr class="footer-divider">
 
-        <div class="text-center text-white-50 small mt-3">
-            © {{ date('Y') }} ClinicWeb. Todos los derechos reservados.
+            <div class="text-center text-white-50 small mt-3">
+                © {{ date('Y') }} ClinicWeb. Todos los derechos reservados.
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
+</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const body = document.body;
+        const panel = document.getElementById('accionesDoctorPanel');
+        const btnDesktop = document.getElementById('btnAccionesDoctor');
+        const btnMobile = document.getElementById('btnAccionesDoctorMobile');
+        const btnCerrar = document.getElementById('cerrarAccionesDoctor');
+        const backdrop = document.getElementById('accionesPanelBackdrop');
+
+        if (!panel || !btnDesktop || !btnCerrar) {
+            return;
+        }
+
+        const botonesAbrir = [btnDesktop, btnMobile].filter(Boolean);
+
+        function actualizarAtributos(estaAbierto) {
+            panel.setAttribute('aria-hidden', String(!estaAbierto));
+            botonesAbrir.forEach(function (boton) {
+                boton.setAttribute('aria-expanded', String(estaAbierto));
+            });
+            btnDesktop.classList.toggle('active', estaAbierto);
+        }
+
+        function abrirPanel() {
+            body.classList.add('acciones-panel-abierto');
+            actualizarAtributos(true);
+            window.setTimeout(function () {
+                btnCerrar.focus();
+            }, 300);
+        }
+
+        function cerrarPanel(devolverFoco = true) {
+            body.classList.remove('acciones-panel-abierto');
+            actualizarAtributos(false);
+
+            if (devolverFoco) {
+                const botonVisible = window.innerWidth >= 992 ? btnDesktop : btnMobile;
+                botonVisible?.focus();
+            }
+        }
+
+        function alternarPanel() {
+            if (body.classList.contains('acciones-panel-abierto')) {
+                cerrarPanel(false);
+            } else {
+                abrirPanel();
+            }
+        }
+
+        botonesAbrir.forEach(function (boton) {
+            boton.addEventListener('click', alternarPanel);
+        });
+
+        btnCerrar.addEventListener('click', function () {
+            cerrarPanel();
+        });
+
+        backdrop?.addEventListener('click', function () {
+            cerrarPanel();
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && body.classList.contains('acciones-panel-abierto')) {
+                cerrarPanel();
+            }
+        });
+
+        panel.querySelectorAll('.acciones-panel-link').forEach(function (enlace) {
+            enlace.addEventListener('click', function () {
+                if (window.innerWidth < 992) {
+                    cerrarPanel(false);
+                }
+            });
+        });
+
+        window.addEventListener('resize', function () {
+            if (!body.classList.contains('acciones-panel-abierto')) {
+                actualizarAtributos(false);
+            }
+        });
+    });
+</script>
+
 
 
 <div class="modal fade" id="modalFotoDoctor" tabindex="-1" aria-labelledby="modalFotoDoctorLabel" aria-hidden="true">
