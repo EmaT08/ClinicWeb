@@ -41,7 +41,6 @@
         .stat-card.cancelado  .stat-number { color: #e74c3c; }
         .stat-label { font-size: 0.88rem; color: #666; font-weight: 600; }
 
-        /* Igual que archivados */
         .table-container {
             background-color: white;
             border-radius: 12px;
@@ -61,13 +60,18 @@
         }
         .table-container h4 i { color: #4ECDC4; }
 
+        /* OBLIGA A LA TABLA A RESPETAR LOS ANCHOS EN PORCENTAJE */
         table.dataTable {
             width: 100% !important;
             border-collapse: collapse;
+            table-layout: fixed;
         }
+
+        /* TÍTULOS DE CABECERA ALINEADOS Y CENTRADOS */
         table.dataTable thead th {
-            padding: 20px;
-            text-align: left;
+            padding: 15px 10px;
+            text-align: center !important;
+            vertical-align: middle !important;
             font-weight: 700;
             font-size: 13px;
             letter-spacing: 0.5px;
@@ -75,16 +79,21 @@
             border-bottom: 2px solid #e0e0e0;
             color: white !important;
             background: #4ecdc4 !important;
+            white-space: nowrap;
         }
+
         table.dataTable tbody tr {
             border-bottom: 1px solid #f0f0f0;
             transition: all 0.2s;
         }
         table.dataTable tbody tr:hover { background: #f8f9fa; }
+
         table.dataTable tbody td {
-            padding: 20px;
+            padding: 15px 10px;
             color: #666;
             vertical-align: middle;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
 
         .dataTables_wrapper .dataTables_length,
@@ -133,6 +142,7 @@
             font-size: 0.8rem;
             font-weight: 700;
             white-space: nowrap;
+            display: inline-block;
         }
         .badge-Pendiente  { background: #fff3cd; color: #856404; }
         .badge-Finalizado { background: #d4edda; color: #155724; }
@@ -192,33 +202,33 @@
                 <tbody class="table-group-divider">
                 @foreach($traslados as $traslado)
                     <tr>
-                        <td class="num-cell"></td>
+                        <td class="num-cell" style="text-align: center;"></td>
                         <td>
-                                <span class="patient-name">
-                                    {{ $traslado->paciente->nombres ?? 'N/A' }}
-                                    {{ $traslado->paciente->apellidos ?? '' }}
-                                </span>
+                            <span class="patient-name">
+                                {{ $traslado->paciente->nombres ?? 'N/A' }}
+                                {{ $traslado->paciente->apellidos ?? '' }}
+                            </span>
                         </td>
                         <td>
                             {{ $traslado->direccion_destino }}
                         </td>
-                        <td>
-                                <span class="unit-name">
-                                    {{ $traslado->unidad_asignada }}
-                                </span>
+                        <td style="text-align: center;">
+                            <span class="unit-name">
+                                {{ $traslado->unidad_asignada }}
+                            </span>
                         </td>
-                        <td>
+                        <td style="text-align: center; white-space: nowrap;">
                             {{ \Carbon\Carbon::parse($traslado->fecha_traslado)->format('d/m/Y H:i') }}
                         </td>
-                        <td>
+                        <td style="text-align: right; white-space: nowrap;">
                             <strong style="color:#2c3e50;">
                                 L. {{ number_format($traslado->costo_estimado, 2) }}
                             </strong>
                         </td>
-                        <td>
-                                <span class="badge-estado badge-{{ str_replace(' ', '-', $traslado->estado) }}">
-                                    {{ $traslado->estado }}
-                                </span>
+                        <td style="text-align: center;">
+                            <span class="badge-estado badge-{{ str_replace(' ', '-', $traslado->estado) }}">
+                                {{ $traslado->estado }}
+                            </span>
                         </td>
                     </tr>
                 @endforeach
@@ -261,8 +271,13 @@
                 lengthMenu: [[5, 10, 25, 50, -1], [5, 10, 25, 50, "Todos"]],
                 order: [[3, 'desc']],
                 columnDefs: [
-                    { targets: 0, orderable: false, searchable: false, width: '40px' },
-                    { targets: 6, orderable: false, searchable: false }
+                    { targets: 0, orderable: false, searchable: false, width: '5%' },   /* # */
+                    { targets: 1, width: '18%' },                                       /* PACIENTE */
+                    { targets: 2, width: '30%' },                                       /* DESTINO */
+                    { targets: 3, width: '13%' },                                       /* AMBULANCIA */
+                    { targets: 4, width: '14%' },                                       /* FECHA Y HORA */
+                    { targets: 5, width: '10%' },                                       /* COSTO */
+                    { targets: 6, orderable: false, searchable: false, width: '10%' }   /* ESTADO */
                 ],
                 drawCallback: function() {
                     const info = this.api().page.info();
@@ -274,6 +289,4 @@
             });
         });
     </script>
-
 @endsection
-
